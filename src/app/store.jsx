@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import counterReducer2 from '../features/counter/counterSlice';
+//counterReducer in an optional name (named options)
 
 export const store = configureStore({
   //now counterReducer is available to entire App when we wrap App in Provider and have store as <props></props>
   reducer: {
-    counter: counterReducer,
+    counter: counterReducer2,
   },
 });
