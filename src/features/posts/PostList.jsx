@@ -7,11 +7,16 @@ const PostsList = () => {
   //wiht selectAllPosts if the shape of the state ever changes we will just need to change it in the slice not in every component
   const posts = useSelector(selectAllPosts);
 
+  //for reverse order of posts
+  const orderedPosts = posts
+    .slice()
+    .sort((a, b) => b.date.localeCompare(a.date));
+
   console.log(posts); //posts is initailState array in postsSlice
   const dispatch = useDispatch();
 
   //for show states(that object contains blogs)
-  const renderedPosts = posts.map((post) => (
+  const renderedPosts = orderedPosts.map((post) => (
     <article key={post.id}>
       <h3>{post.title}</h3>
       <p>{post.content.substring(0, 100)}</p>
