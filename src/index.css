@@ -65,5 +65,11 @@ form {
   background: transparent;
   border: none;
   color: whitesmoke;
-  font-size: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 500ms;
+}
+
+.reactionButton:hover {
+  transform: scale(1.1);
 }

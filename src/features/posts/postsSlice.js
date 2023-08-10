@@ -7,12 +7,26 @@ const initialState = [
     title: 'Learning Redux Toolkit',
     content: "I've heard good things.",
     date: sub(new Date(), { minutes: 10 }).toISOString(), //toISOString convert to a timestamp string
+    reactions: {
+      thumbsUp: 0,
+      wow: 0,
+      heart: 0,
+      rocket: 0,
+      coffee: 0,
+    },
   },
   {
     id: '2',
     title: 'Slices...',
     content: 'The more I say slice, the more I want pizza.',
     date: sub(new Date(), { minutes: 10 }).toISOString(),
+    reactions: {
+      thumbsUp: 0,
+      wow: 0,
+      heart: 0,
+      rocket: 0,
+      coffee: 0,
+    },
   },
 ];
 
@@ -21,8 +35,6 @@ const postsSlice = createSlice({
   initialState,
   reducers: {
     postAdded: {
-      //action.payload is every thing that we send as argument when useDispatch
-      // state.push(action.payload);
       reducer(state, action) {
         state.push(action.payload);
       },
@@ -34,19 +46,32 @@ const postsSlice = createSlice({
             content,
             date: new Date().toISOString(),
             userId,
+            reactions: {
+              thumbsUp: 0,
+              wow: 0,
+              heart: 0,
+              rocket: 0,
+              coffee: 0,
+            },
           },
         };
       },
     },
-  },
-  //state must be first paramter and action must be second parameter
-  log(state, action) {
-    console.log(action.payload);
+    reactionAdded(state, action) {
+      const { postId, reaction } = action.payload;
+      const existingPost = state.find((post) => post.id === postId);
+      if (existingPost) {
+        existingPost.reactions[reaction]++;
+      }
+    },
+    log(state, action) {
+      console.log(action.payload);
+    },
   },
 });
 
 //state.post because name of createSlice is 'post'
 export const selectAllPosts = (state) => state.posts;
-export const { log, postAdded } = postsSlice.actions;
+export const { log, postAdded, reactionAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;
