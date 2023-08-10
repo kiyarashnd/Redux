@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { log, selectAllPosts } from './postsSlice';
+import { log, selectAllPosts, enableReaction } from './postsSlice';
 import PostAuthor from './PostAuthor';
 import TimeAgo from './TimeAgo';
 import ReactionButtons from './ReactionButtons';
@@ -22,8 +22,12 @@ const PostsList = () => {
   const renderedPosts = orderedPosts.map((post) => (
     <article
       key={post.id}
-      onMouseOver={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      onMouseOver={() =>
+        dispatch(enableReaction({ postId: post.id, st: true }))
+      }
+      onMouseLeave={() =>
+        dispatch(enableReaction({ postId: post.id, st: false }))
+      }
     >
       <h3>{post.title}</h3>
       <p>{post.content.substring(0, 100)}</p>
@@ -32,7 +36,7 @@ const PostsList = () => {
         <PostAuthor userId={post.userId} />
         <TimeAgo timestamp={post.date} />
       </p>
-      {isHover && <ReactionButtons post={post} />}
+      {post.isReactionEnable && <ReactionButtons post={post} />}
     </article>
   ));
 

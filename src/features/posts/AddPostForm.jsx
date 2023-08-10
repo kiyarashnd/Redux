@@ -12,8 +12,6 @@ const AddPostForm = () => {
 
   const users = useSelector(selectAllUsers);
 
-  const [isEmpty, setIsEmpty] = useState(false);
-
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onContentChanged = (e) => setContent(e.target.value);
   const onAuthorChanged = (e) => setUserId(e.target.value);
@@ -21,16 +19,13 @@ const AddPostForm = () => {
   const onSavePostClicked = () => {
     if (title && content) {
       dispatch(postAdded(title, content, userId));
-      setIsEmpty(false);
       setContent('');
       setTitle('');
-    } else {
-      setIsEmpty(true);
     }
   };
   //check if the title and content and userId are all true then canSave gonna be true we can enable form button
   const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
-  //in every input we have onChange that when changed them fire a useState that rerender component
+  //in every input we have onChange that when changed them fire a useState that rerender componne
 
   const usersOptions = users.map((user) => (
     <option key={user.id} value={user.id}>
@@ -64,7 +59,6 @@ const AddPostForm = () => {
           value={content}
           onChange={onContentChanged}
         />
-        {isEmpty && <p style={{ color: 'red' }}>fill two filed</p>}
         <button
           type='button'
           onClick={onSavePostClicked}

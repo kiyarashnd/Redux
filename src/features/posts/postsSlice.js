@@ -14,6 +14,7 @@ const initialState = [
       rocket: 0,
       coffee: 0,
     },
+    isReactionEnable: false,
   },
   {
     id: '2',
@@ -27,6 +28,7 @@ const initialState = [
       rocket: 0,
       coffee: 0,
     },
+    isReactionEnable: false,
   },
 ];
 
@@ -53,6 +55,7 @@ const postsSlice = createSlice({
               rocket: 0,
               coffee: 0,
             },
+            isReactionEnable: false,
           },
         };
       },
@@ -64,6 +67,12 @@ const postsSlice = createSlice({
         existingPost.reactions[reaction]++;
       }
     },
+    enableReaction(state, action) {
+      const { postId, st } = action.payload;
+      const item = state.find((post) => post.id === postId);
+      item.isReactionEnable = st;
+      console.log(item.isReactionEnable);
+    },
     log(state, action) {
       console.log(action.payload);
     },
@@ -72,6 +81,7 @@ const postsSlice = createSlice({
 
 //state.post because name of createSlice is 'post'
 export const selectAllPosts = (state) => state.posts;
-export const { log, postAdded, reactionAdded } = postsSlice.actions;
+export const { log, postAdded, reactionAdded, enableReaction } =
+  postsSlice.actions;
 
 export default postsSlice.reducer;
